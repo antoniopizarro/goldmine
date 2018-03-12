@@ -68,12 +68,51 @@ class GolddiggerSpider(CrawlSpider):
         print response.url
         item = response.meta['item']
         item['other_url'] = response.url
-
         item['name'] = str(response.css('h1::text').extract_first())
         item['address'] = str(response.css('li.icon.icon--poi::text').extract_first())
-        item['telnumber'] = str(response.css('li.icon.icon--phone a::text').extract_first())
-        item['email'] = str(response.css('li.icon.icon--mail a::text').extract_first())
-        item['website'] = str(response.css('li.icon.icon--website a::text').extract_first())
+
+        number = response.css('li.icon.icon--phone a::text').extract()
+        if number:
+            if len(number)>1:
+                telnumber = number[0]
+                telnumber2 = number[1]
+            else:
+                telnumber = number[0]
+                telnumber2 = ''
+        else:
+            telnumber = ''
+            telnumber2 = ''
+        item['telnumber'] = str(telnumber)
+        item['secondTelnumber'] = str(telnumber2)
+
+        emails = response.css('li.icon.icon--mail a::text').extract()
+        if emails:
+            if len(emails)>1:
+                email = emails[0]
+                email2 = emails[1]
+            else:
+                email = emails[0]
+                email2 = ''
+        else:
+            email = ''
+            email2 = ''
+        item['email'] = str(email)
+        item['secondEmail'] = str(email2)
+
+        websites = response.css('li.icon.icon--website a::text').extract()
+        if websites:
+            if len(websites)>1:
+                website = websites[0]
+                website2 = websites[1]
+            else:
+                website = websites[0]
+                website2 = ''
+        else:
+            website = ''
+            website2 = ''
+        
+        item['website'] = str(website)
+        item['secondWebsite'] = str(website2)
 
         yield item
         print item
