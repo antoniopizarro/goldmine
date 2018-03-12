@@ -1,2 +1,0 @@
-# goldmine
-Webcrawler for goudengids
