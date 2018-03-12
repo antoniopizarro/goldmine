@@ -30,9 +30,9 @@ class GolddiggerSpider(CrawlSpider):
         selector_list= response.css('li[itemprop=itemListElement]')
         for selector in selector_list:
 
-            logo = response.css('div.result-item__logo')
+            logo = response.css('div.result-item__logo img::attr(alt)').extract_first()
 
-            if logo is not None or logo:
+            if logo:
                 logo = 'yes'
             else:
                 logo = 'no'
