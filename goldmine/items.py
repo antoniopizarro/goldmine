@@ -22,8 +22,10 @@ class GoldmineItem(scrapy.Item):
     logo = scrapy.Field()
     website = scrapy.Field()
     secondWebsite = scrapy.Field()
+    category = scrapy.Field()
 
 class FinalGoldmineItem(scrapy.Item):
+    category = scrapy.Field()
     name = scrapy.Field()
     address = scrapy.Field()
     telnumber = scrapy.Field()
@@ -33,3 +35,4 @@ class FinalGoldmineItem(scrapy.Item):
     logo = scrapy.Field()
     website = scrapy.Field()
     secondWebsite = scrapy.Field()
+

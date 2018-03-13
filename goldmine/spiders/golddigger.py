@@ -7,19 +7,31 @@ from goldmine.items import GoldmineItem
 
 
 class GolddiggerSpider(CrawlSpider):
-    name = 'golddigger'
-    allowed_domains = ['goudengids.be']
-    start_urls = ['https://www.goudengids.be/zoeken/aannemers/']
-    # start_urls = ['http://www.dropsolid.com']
+    # name = 'golddigger'
+    # allowed_domains = ['goudengids.be']
+    # start_urls = ['https://www.goudengids.be/zoeken/aannemers/']
+    # # start_urls = ['http://www.dropsolid.com']
 
-    rules = [
-        Rule(LinkExtractor(allow=['/aannemers/\d+/']),
-            callback='parse_item',
-            follow=True)
-    ]
+    # rules = [
+    #     Rule(LinkExtractor(allow=['/aannemers/\d+/']),
+    #         callback='parse_item',
+    #         follow=True)
+    # ]
     # rules = [
     #     Rule(LinkExtractor(allow=['.*']), callback='parse_item', follow=True),
     # ]
+
+    name = 'golddigger'
+    allowed_domains = ['goudengids.be']
+    start_urls = ['https://www.goudengids.be/zoeken/+/']
+    # start_urls = ['http://www.dropsolid.com']
+
+    rules = [
+        Rule(LinkExtractor(allow=['/zoeken/\+/\d+/']),
+            callback='parse_item',
+            follow=True)
+    ]
+
 
     def parse_item(self, response):
         print response.url
@@ -41,30 +53,11 @@ class GolddiggerSpider(CrawlSpider):
         links= response.css('a.result-item__heading::attr(href)').extract()
         for l in links:
             next_url = 'http://www.goudengids.be' + l
-            request = scrapy.Request(next_url, callback = self.parse_1)
+            request = scrapy.Request(next_url, callback = self.parse_third)
             request.meta['item'] = item
             yield request
 
-        # selector_list= response.css('li[itemprop=itemListElement]')
-        # # selector_list= response.css('ol.result-items')
-
-        # for selector in selector_list:
-        #     links = response.css('a.result-item__heading::attr(href)').extract()
-        #     #print links
-        #     for l in links:
-        #         next_url = 'http://goudengids.be' + l
-        #         return scrapy.Request(next_url, callback = self.parse_1)
-
-        #     name = selector.css('h2::text').extract_first()
-        #     # name = response.css()
-        #     # address = 
-        #     # logo =
-        #     # website =
-        #     item = GoldmineItem({'name': name})# 'address': 'logo': 'website':})
-        #     yield item
-        #     print item
-
-    def parse_1(self, response):
+    def parse_third(self, response):
         print response.url
         item = response.meta['item']
         item['other_url'] = response.url
@@ -114,8 +107,19 @@ class GolddiggerSpider(CrawlSpider):
         item['website'] = str(website)
         item['secondWebsite'] = str(website2)
 
+        cat = response.css('div[id=detail-kw] dl dd::text').extract_first()
+
+        if cat:
+            category = cat
+        else:
+            category = response.css('dl.list--horizontal a::text').extract_first()
+
+        item['category'] = str(category)
+
+
         yield item
         print item
+
 
 
 
