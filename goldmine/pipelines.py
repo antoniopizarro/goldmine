@@ -100,12 +100,12 @@ class ElasticSearchPipeline(object):
             import certifi
             es_settings['port'] = 443
             es_settings['use_ssl'] = True
-            # es_settings['ca_certs'] = crawler_settings['ELASTICSEARCH_CA']['CA_CERT']
-            # es_settings['client_key'] = crawler_settings['ELASTICSEARCH_CA']['CLIENT_KEY']
-            # es_settings['client_cert'] = crawler_settings['ELASTICSEARCH_CA']['CLIENT_CERT']
-            es_settings['ca_certs'] = certifi.where()
-            es_settings['client_key'] = None
-            es_settings['client_cert'] = None
+            es_settings['ca_certs'] = crawler_settings['ELASTICSEARCH_CA']['CA_CERT']
+            es_settings['client_key'] = crawler_settings['ELASTICSEARCH_CA']['CLIENT_KEY']
+            es_settings['client_cert'] = crawler_settings['ELASTICSEARCH_CA']['CLIENT_CERT']
+            # es_settings['ca_certs'] = certifi.where()
+            # es_settings['client_key'] = None
+            # es_settings['client_cert'] = None
 
         es = Elasticsearch(**es_settings)
         return es

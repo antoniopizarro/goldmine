@@ -72,8 +72,15 @@ ITEM_PIPELINES = {
 #ELASTICSEARCH CONFIGURATION
 # ELASTICSEARCH_SERVERS = ['https://48e31706.ngrok.io']
 ELASTICSEARCH_SERVERS = ['https://cd8ff350.ngrok.io']
-ELASTICSEARCH_INDEX = 'goldmine'
+ELASTICSEARCH_INDEX = 'testcloud'
 ELASTICSEARCH_TYPE = 'items'
+
+ELASTICSEARCH_CA = {
+	'CA_CERT': None,
+	'CLIENT_CERT': None,
+	'CLIENT_KEY': None
+}
+
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
