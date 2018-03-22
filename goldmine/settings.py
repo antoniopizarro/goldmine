@@ -70,8 +70,9 @@ ITEM_PIPELINES = {
 }
 
 #ELASTICSEARCH CONFIGURATION
-ELASTICSEARCH_SERVERS = ['http://48e31706.ngrok.io']
-ELASTICSEARCH_INDEX = 'goudengids'
+# ELASTICSEARCH_SERVERS = ['https://48e31706.ngrok.io']
+ELASTICSEARCH_SERVERS = ['https://cd8ff350.ngrok.io']
+ELASTICSEARCH_INDEX = 'goldmine'
 ELASTICSEARCH_TYPE = 'items'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
