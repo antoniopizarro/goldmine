@@ -3,6 +3,7 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from goldmine.items import GoldmineItem
+from unidecode import unidecode
 
 
 
@@ -52,7 +53,7 @@ class GolddiggerSpider(CrawlSpider):
 
         links= response.css('a.result-item__heading::attr(href)').extract()
         for l in links:
-            next_url = 'http://www.goudengids.be' + l
+            next_url = 'https://www.goudengids.be' + l
             request = scrapy.Request(next_url, callback = self.parse_third)
             request.meta['item'] = item
             yield request
@@ -61,8 +62,8 @@ class GolddiggerSpider(CrawlSpider):
         print response.url
         item = response.meta['item']
         item['other_url'] = response.url
-        item['name'] = str(response.css('h1::text').extract_first())
-        item['address'] = str(response.css('li.icon.icon--poi::text').extract_first())
+        item['name'] = unidecode(response.css('h1::text').extract_first())
+        item['address'] = unidecode(response.css('li.icon.icon--poi::text').extract_first())
 
         number = response.css('li.icon.icon--phone a::text').extract()
         if number:
@@ -89,8 +90,8 @@ class GolddiggerSpider(CrawlSpider):
         else:
             email = ''
             email2 = ''
-        item['email'] = str(email)
-        item['secondEmail'] = str(email2)
+        item['email'] = unidecode(email)
+        item['secondEmail'] = unidecode(email2)
 
         websites = response.css('li.icon.icon--website a::text').extract()
         if websites:
@@ -104,18 +105,20 @@ class GolddiggerSpider(CrawlSpider):
             website = ''
             website2 = ''
         
-        item['website'] = str(website)
-        item['secondWebsite'] = str(website2)
+        item['website'] = unidecode(website)
+        item['secondWebsite'] = unidecode(website2)
 
-        cat = response.css('div[id=detail-kw] dl dd::text').extract_first()
+        cat1 = response.css('div[id=detail-kw] dl dd::text').extract_first()
+        cat2 = category = response.css('dl.list--horizontal a::text').extract_first()
 
-        if cat:
-            category = cat
-        else:
-            category = response.css('dl.list--horizontal a::text').extract_first()
-
-        item['category'] = str(category)
-
+        if cat1:
+            category = cat1
+        elif cat2:
+            category = cat2
+        else
+            category = '' 
+            
+        item['category'] = unidecode(category)
 
         yield item
         print item

@@ -66,7 +66,13 @@ ROBOTSTXT_OBEY = False
 ITEM_PIPELINES = {
     'goldmine.pipelines.GoldminePipeline': 300,
     'goldmine.pipelines.CsvPipeline': 500,
+    'goldmine.pipelines.ElasticSearchPipeline':600
 }
+
+#ELASTICSEARCH CONFIGURATION
+ELASTICSEARCH_SERVERS = ['localhost']
+ELASTICSEARCH_INDEX = 'goudengids'
+ELASTICSEARCH_TYPE = 'items'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
