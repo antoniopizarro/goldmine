@@ -115,7 +115,7 @@ class GolddiggerSpider(CrawlSpider):
             category = cat1
         elif cat2:
             category = cat2
-        else
+        else:
             category = '' 
             
         item['category'] = unidecode(category)
