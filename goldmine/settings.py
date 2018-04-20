@@ -70,16 +70,12 @@ ITEM_PIPELINES = {
 }
 
 #ELASTICSEARCH CONFIGURATION
-# ELASTICSEARCH_SERVERS = ['https://48e31706.ngrok.io']
-ELASTICSEARCH_SERVERS = ['https://cd8ff350.ngrok.io']
-ELASTICSEARCH_INDEX = 'testcloud'
-ELASTICSEARCH_TYPE = 'items'
-
-ELASTICSEARCH_CA = {
-	'CA_CERT': None,
-	'CLIENT_CERT': None,
-	'CLIENT_KEY': None
-}
+ELASTICSEARCH_SERVERS = ['http://elastic:dropsolidelastic@35.195.168.139']
+ELASTICSEARCH_INDEX = 'goldmine'
+ELASTICSEARCH_TYPE = 'item'
+ELASTICSEARCH_UNIQ_KEY = 'name'
+ELASTICSEARCH_BUFFER_LENGTH = 500
+# ELASTICSEARCH_INDEX_DATE_FORMAT = '%m-%Y'
 
 
 # Enable and configure the AutoThrottle extension (disabled by default)

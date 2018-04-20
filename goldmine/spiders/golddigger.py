@@ -4,7 +4,8 @@ from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from goldmine.items import GoldmineItem
 from unidecode import unidecode
-
+import time
+import datetime
 
 
 class GolddiggerSpider(CrawlSpider):
@@ -33,12 +34,13 @@ class GolddiggerSpider(CrawlSpider):
             follow=True)
     ]
 
-
     def parse_item(self, response):
         print response.url
 
         item = GoldmineItem()
         item['mainurl'] = response.url
+        date = datetime.datetime.now()
+        item['updated'] = date.isoformat()
 
         selector_list= response.css('li[itemprop=itemListElement]')
         for selector in selector_list:
@@ -119,6 +121,8 @@ class GolddiggerSpider(CrawlSpider):
             category = '' 
             
         item['category'] = unidecode(category)
+
+
 
         yield item
         print item

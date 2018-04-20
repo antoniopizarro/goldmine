@@ -11,7 +11,7 @@ from scrapy.exporters import CsvItemExporter
 class GoldminePipeline(object):
     def process_item(self, item, spider):
 
-        item_out = FinalGoldmineItem({'category': item['category'], 'name': item['name'], 'address':item['address'], 'telnumber':item['telnumber'], 'email':item['email'], 'logo':item['logo'], 'website':item['website'], 'secondTelnumber': item['secondTelnumber'], 'secondWebsite': item['secondWebsite'], 'secondEmail':item['secondEmail']})
+        item_out = FinalGoldmineItem({'category': item['category'], 'name': item['name'], 'address':item['address'], 'telnumber':item['telnumber'], 'email':item['email'], 'logo':item['logo'], 'website':item['website'], 'secondTelnumber': item['secondTelnumber'], 'secondWebsite': item['secondWebsite'], 'secondEmail':item['secondEmail'], 'updated':item['updated']})
         return self.delete_doubles(item_out)
 
 
